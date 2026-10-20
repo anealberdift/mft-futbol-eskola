@@ -266,3 +266,71 @@
   .wrap { margin-top: 12px; }
   .entry { padding: 16px; }
 }
+
+
+/* Urteko egutegia: zutabeak kategoriako talde guztientzat */
+.calendar-section {
+  margin: 18px 0 28px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 6px 18px rgba(40, 33, 108, .08);
+}
+.calendar-heading {
+  margin: 0;
+  padding: 16px;
+  font-size: 17px;
+  color: #28216c;
+}
+.calendar-section.BEN1 .calendar-heading { background: #fff0bd; }
+.calendar-section.BEN2 .calendar-heading { background: #dceeff; }
+.calendar-section.ALE .calendar-heading {
+  background: #28216c;
+  color: white;
+  border-bottom: 3px solid #f4b43c;
+}
+.calendar-scroll { overflow-x: auto; }
+.calendar-scroll:focus-visible { outline: 3px solid #f4b43c; }
+.calendar-table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  min-width: 330px;
+  font-size: 13px;
+}
+.calendar-section.BEN1 .calendar-table { min-width: 440px; }
+.calendar-section.ALE .calendar-table { min-width: 620px; }
+.calendar-table th, .calendar-table td {
+  border: 1px solid #e8e8f1;
+  padding: 11px 9px;
+  vertical-align: top;
+  text-align: left;
+}
+.calendar-table thead th { background: #f1f1f8; color: #28216c; }
+.calendar-table .calendar-round-head,
+.calendar-table .calendar-round { width: 90px; }
+.calendar-table .calendar-round {
+  color: #28216c;
+  background: #fafaff;
+  font-size: 12px;
+}
+.calendar-section.BEN1 .calendar-table td { background: #fffaf0; }
+.calendar-section.BEN2 .calendar-table td { background: #f2f8ff; }
+.calendar-section.ALE .calendar-table td { background: #f2f0fc; }
+.calendar-match + .calendar-match {
+  border-top: 1px dashed #b9b7d2;
+  margin-top: 9px;
+  padding-top: 9px;
+}
+.calendar-date { font-weight: 700; color: #28216c; }
+.calendar-opponent { margin: 5px 0; overflow-wrap: anywhere; }
+.calendar-place {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.calendar-place.home-tag { background: #dcfce7; color: #166534; }
+.calendar-place.away-tag { background: #fff3d8; color: #854d0e; }
+.calendar-empty { color: #9290a5; }

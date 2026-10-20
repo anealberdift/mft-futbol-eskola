@@ -97,28 +97,133 @@
       field(card,'Oharrak',t.Oharrak);
       return card;
     }
-    function render(){
-      const titles={
-        jardunaldiak:'Jardunaldiak',entrenamenduak:'Entrenamenduak',urteko:'Urteko egutegia'
-      };
-      el('page-title').textContent=titles[page]||'';
-      const bar=el('filter-bar');
-      bar.replaceChildren();
-      filterButton(bar,'Guztiak',category==='guztiak',()=>{category='guztiak';team='guztiak';render();});
-      cats.forEach(([id,label])=>filterButton(bar,label,category===id,()=>{category=id;team='guztiak';render();}));
-      if(page==='urteko'){
-        const options=category==='BEN1'?['A','B']:category==='BEN2'?[]:category==='ALE'?['A','B','C']:[];
-        options.forEach(t=>filterButton(bar,'Talde '+t,team===t,()=>{team=t;render();}));
+    // Urteko egutegia: kategoria bakoitzeko talde guztiak zutabeetan.
+    const calendarTeams = {
+      BEN1: ['A', 'B'],
+      BEN2: [''],
+      ALE: ['A', 'B', 'C']
+    };
+
+    function roundOf(match) {
+      return String(match['Jardunaldi zk.'] ?? '').trim();
+    }
+
+    function roundSort(a, b) {
+      const na = Number(a);
+      const nb = Number(b);
+      if (a && b && Number.isFinite(na) && Number.isFinite(nb)) {
+        return na - nb;
       }
-      const out=el('results');
+      return a.localeCompare(b, 'eu', { numeric: true });
+    }
+
+    function calendarCell(match) {
+      const box = node('div', undefined, 'calendar-match');
+      if (!match) {
+        box.append(node('span', '—', 'calendar-empty'));
+        return box;
+      }
+
+      const date = String(match.Data ?? '').trim();
+      const opponent = String(match.Aurkaria ?? '').trim();
+      const place = String(match['Etxean/Kanpoan'] ?? '').trim();
+
+      box.append(node('div', '📅 ' + (date || 'Zehazteke'), 'calendar-date'));
+      box.append(node('div', '⚽ ' + (opponent || 'Zehazteke'), 'calendar-opponent'));
+      if (place) {
+        const badge = node('span', place, 'calendar-place');
+        badge.classList.add(place.toLowerCase() === 'etxean' ? 'home-tag' : 'away-tag');
+        box.append(badge);
+      }
+      return box;
+    }
+
+    function calendarTable(cat) {
+      const section = node('section', undefined, 'calendar-section ' + cat);
+      section.append(node('h3', names[cat], 'calendar-heading'));
+
+      const relevant = matches().filter(m => categoryOf(m) === cat);
+      if (!relevant.length) {
+        section.append(node('p', 'Ez dago jardunaldirik kategoria honetan.', 'section-note'));
+        return section;
+      }
+
+      const teams = calendarTeams[cat];
+      const rounds = [...new Set(relevant.map(roundOf))].sort(roundSort);
+      const scroll = node('div', undefined, 'calendar-scroll');
+      scroll.setAttribute('tabindex', '0');
+      scroll.setAttribute('aria-label', names[cat] + ' egutegia, horizontalki mugitzeko aukera');
+      const table = node('table', undefined, 'calendar-table');
+      const thead = node('thead');
+      const header = node('tr');
+      header.append(node('th', 'Jard.', 'calendar-round-head'));
+      teams.forEach(t => header.append(node('th', t ? t + ' taldea' : 'Talde bakarra')));
+      thead.append(header);
+      table.append(thead);
+
+      const tbody = node('tbody');
+      rounds.forEach(round => {
+        const row = node('tr');
+        row.append(node('th', round ? round + '. jard.' : 'Jard. zehazteke', 'calendar-round'));
+        teams.forEach(t => {
+          const td = node('td');
+          const games = relevant.filter(m => roundOf(m) === round && teamOf(m) === t);
+          if (!games.length) {
+            td.append(calendarCell(null));
+          } else {
+            games.forEach(m => td.append(calendarCell(m)));
+          }
+          row.append(td);
+        });
+        tbody.append(row);
+      });
+      table.append(tbody);
+      scroll.append(table);
+      section.append(scroll);
+      return section;
+    }
+
+    function render() {
+      const titles = {
+        jardunaldiak: 'Jardunaldiak',
+        entrenamenduak: 'Entrenamenduak',
+        urteko: 'Urteko egutegia'
+      };
+      el('page-title').textContent = titles[page] || '';
+      const bar = el('filter-bar');
+      bar.replaceChildren();
+      filterButton(bar, 'Guztiak', category === 'guztiak', () => {
+        category = 'guztiak';
+        team = 'guztiak';
+        render();
+      });
+      cats.forEach(([id, label]) => {
+        filterButton(bar, label, category === id, () => {
+          category = id;
+          team = 'guztiak';
+          render();
+        });
+      });
+
+      const out = el('results');
       out.replaceChildren();
-      if(page==='urteko')out.append(node('p','Denboraldi osoko partidak. Taldearen letra Google Sheets-eko Taldea zutabetik hartzen da.','section-note'));
-      const list=page==='entrenamenduak'?(Array.isArray(dataset.entrenamenduak)?dataset.entrenamenduak:[]).filter(x=>category==='guztiak'||categoryOf(x)===category):filteredMatches();
-      if(!list.length){
-        out.append(node('div','Ez dago daturik hautatutako aukerarako. Google Sheets-en fitxak eta ikusgarritasuna egiaztatu.','notice'));
+
+      if (page === 'urteko') {
+        out.append(node('p', 'Jardunaldiak errenkadetan eta taldeak zutabeetan. Mugikorrean, mugitu taula alboetara behar izanez gero.', 'section-note'));
+        const selected = category === 'guztiak' ? cats.map(c => c[0]) : [category];
+        selected.forEach(cat => out.append(calendarTable(cat)));
         return;
       }
-      list.forEach(item=>out.append(page==='entrenamenduak'?trainingCard(item):matchCard(item)));
+
+      const list = page === 'entrenamenduak'
+        ? (Array.isArray(dataset.entrenamenduak) ? dataset.entrenamenduak : [])
+            .filter(x => category === 'guztiak' || categoryOf(x) === category)
+        : filteredMatches();
+      if (!list.length) {
+        out.append(node('div', 'Ez dago daturik hautatutako aukerarako. Google Sheets-en fitxak eta ikusgarritasuna egiaztatu.', 'notice'));
+        return;
+      }
+      list.forEach(item => out.append(page === 'entrenamenduak' ? trainingCard(item) : matchCard(item)));
     }
     function showPage(p){
       page=p;

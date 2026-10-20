@@ -241,11 +241,34 @@
       return result;
     }
 
+
+    // Guraso arduradunak: izen publikoak soilik, kategoriaka.
+    function parentCards() {
+      const wrap = node('div', undefined, 'parents-grid');
+      const people = Array.isArray(dataset.gurasoArduradunak) ? dataset.gurasoArduradunak : [];
+      const selected = category === 'guztiak' ? cats : cats.filter(([id]) => id === category);
+      selected.forEach(([id, label]) => {
+        const card = node('article', undefined, 'entry ' + id + ' parent-card');
+        card.append(node('h3', '👥 ' + label));
+        const list = people.filter(person => categoryOf(person) === id && String(person.Izena || '').trim());
+        if (list.length) {
+          const ul = node('ul', undefined, 'parent-names');
+          list.forEach(person => ul.append(node('li', person.Izena)));
+          card.append(ul);
+        } else {
+          card.append(node('p', 'Ez dago guraso arduradunik argitaratuta.'));
+        }
+        wrap.append(card);
+      });
+      return wrap;
+    }
+
     function render() {
       const titles = {
         jardunaldiak: 'Jardunaldiak',
         entrenamenduak: 'Entrenamenduak',
-        urteko: 'Urteko egutegia'
+        urteko: 'Urteko egutegia',
+        gurasoak: 'Guraso arduradunak'
       };
       el('page-title').textContent = titles[page] || '';
       const bar = el('filter-bar');
@@ -266,7 +289,12 @@
       const out = el('results');
       out.replaceChildren();
 
-      if (page === 'urteko') {
+             if (page === 'gurasoak') {
+         out.append(parentCards());
+         return;
+       }
+
+if (page === 'urteko') {
         out.append(node('p', 'Jardunaldiak errenkadetan eta taldeak zutabeetan. Mugikorrean, mugitu taula alboetara behar izanez gero.', 'section-note'));
         const selected = category === 'guztiak' ? cats.map(c => c[0]) : [category];
         selected.forEach(cat => out.append(calendarTable(cat)));

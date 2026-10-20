@@ -1,129 +1,57 @@
 <!DOCTYPE html>
 <html lang="eu">
- <head>
+<head>
   <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
-  <meta charset="utf-8"/>
-  <meta content="width=device-width,initial-scale=1" name="viewport"/>
-  <meta content="#28216c" name="theme-color"/>
-  <title>
-   MFT &middot; Futbol Eskola
-  </title>
-  <link href="style.css" rel="stylesheet"/>
- </head>
- <body>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#28216c">
+  <title>MFT · Futbol Eskola</title>
+  <link href="style.css" rel="stylesheet">
+  <link href="gurasoak.css" rel="stylesheet">
+</head>
+<body>
   <header>
-   <img alt="Mutriku Futbol Taldea logoa" src="logo.png"/>
-   <div>
-    <strong>
-     MFT &middot; FUTBOL ESKOLA
-    </strong>
-    <small>
-     2026&ndash;2027 &middot; Mutriku
-    </small>
-   </div>
+    <img alt="Mutriku Futbol Taldea logoa" src="logo.png">
+    <div><strong>MFT · FUTBOL ESKOLA</strong><small>2026–2027 · Mutriku</small></div>
   </header>
   <main class="wrap">
-   <div class="intro">
-    <h1>
-     Ongi etorri Futbol Eskolara!
-    </h1>
-    <p>
-     Denboraldiko informazio guztia leku berean.
-    </p>
-   </div>
-   <div class="tabs">
-    <button aria-selected="true" class="active" data-tab="public" type="button">
-     👨&zwj;👩&zwj;👧 Familiak
-    </button>
-    <button aria-selected="false" data-tab="private" type="button">
-     🔒 Barne eremua
-    </button>
-   </div>
-   <section class="panel active" id="public">
-    <div class="screen active" id="home">
-     <div class="notice" id="api-status" role="status">
-      Datuak kargatzen&hellip;
-     </div>
-     <div class="cards three">
-      <button class="card" data-page="jardunaldiak" type="button">
-       <span class="symbol">
-        📅
-       </span>
-       <h3>
-        Jardunaldiak
-       </h3>
-       <p>
-        Partidak, kokapenak eta autobusak
-       </p>
-      </button>
-      <button class="card" data-page="entrenamenduak" type="button">
-       <span class="symbol">
-        🕒
-       </span>
-       <h3>
-        Entrenamenduak
-       </h3>
-       <p>
-        Ordutegiak eta aldagelak
-       </p>
-      </button>
-      <button class="card" data-page="urteko" type="button">
-       <span class="symbol">
-        🗓️
-       </span>
-       <h3>
-        Urteko egutegia
-       </h3>
-       <p>
-        Talde bakoitzaren partida guztiak
-       </p>
-      </button>
-     </div>
+    <div class="intro"><h1>Ongi etorri Futbol Eskolara!</h1><p>Denboraldiko informazio guztia leku berean.</p></div>
+    <div class="tabs">
+      <button aria-selected="true" class="active" data-tab="public" type="button">👨‍👩‍👧 Familiak</button>
+      <button aria-selected="false" data-tab="private" type="button">🔒 Barne eremua</button>
     </div>
-    <div class="screen" id="detail">
-     <button class="back" id="back" type="button">
-      &larr; Hasierara
-     </button>
-     <h2 id="page-title">
-     </h2>
-     <div class="filters" id="filter-bar">
-     </div>
-     <button class="refresh" id="refresh" type="button">
-      &orarr; Eguneratu datuak
-     </button>
-     <div aria-live="polite" id="results">
-     </div>
-    </div>
-   </section>
-   <section class="panel" id="private">
-    <div class="login">
-     <h2>
-      🔒 Saioa hasi
-     </h2>
-     <div class="notice">
-      Barne eremua oraindik ez dago aktibatuta. Ez sartu benetako pasahitzik.
-     </div>
-     <label for="email">
-      Helbide elektronikoa
-     </label>
-     <input autocomplete="username" disabled="" id="email" placeholder="izena@adibidea.eus" type="email"/>
-     <label for="password">
-      Pasahitza
-     </label>
-     <input autocomplete="current-password" disabled="" id="password" placeholder="Pasahitza" type="password"/>
-     <button id="login-button" type="button">
-      Saioa hasi
-     </button>
-     <p id="login-status" role="status">
-      Autentifikazio segurua hurrengo fasean ezarriko dugu.
-     </p>
-    </div>
-   </section>
+    <section class="panel active" id="public">
+      <div class="screen active" id="home">
+        <div class="notice" id="api-status" role="status">Datuak kargatzen…</div>
+        <div class="cards three">
+          <button class="card" data-page="jardunaldiak" type="button"><span class="symbol">📅</span><h3>Jardunaldiak</h3><p>Partidak, kokapenak eta autobusak</p></button>
+          <button class="card" data-page="entrenamenduak" type="button"><span class="symbol">🕒</span><h3>Entrenamenduak</h3><p>Ordutegiak eta aldagelak</p></button>
+          <button class="card" data-page="urteko" type="button"><span class="symbol">🗓️</span><h3>Urteko egutegia</h3><p>Talde bakoitzaren partida guztiak</p></button>
+          <button class="card" data-page="gurasoak" type="button"><span class="symbol">👥</span><h3>Guraso arduradunak</h3><p>Kategoria bakoitzeko arduradunak</p></button>
+        </div>
+      </div>
+      <div class="screen" id="detail">
+        <button class="back" id="back" type="button">← Hasierara</button>
+        <h2 id="page-title"></h2>
+        <div class="filters" id="filter-bar"></div>
+        <button class="refresh" id="refresh" type="button">↻ Eguneratu datuak</button>
+        <div aria-live="polite" id="results"></div>
+      </div>
+    </section>
+    <section class="panel" id="private">
+      <div class="login">
+        <h2>🔒 Saioa hasi</h2>
+        <div class="notice">Barne eremua oraindik ez dago aktibatuta. Ez sartu benetako pasahitzik.</div>
+        <label for="email">Helbide elektronikoa</label>
+        <input autocomplete="username" disabled id="email" placeholder="izena@adibidea.eus" type="email">
+        <label for="password">Pasahitza</label>
+        <input autocomplete="current-password" disabled id="password" placeholder="Pasahitza" type="password">
+        <button id="login-button" type="button">Saioa hasi</button>
+        <p id="login-status" role="status">Autentifikazio segurua hurrengo fasean ezarriko dugu.</p>
+      </div>
+    </section>
   </main>
-  <footer>
-   Mutriku Futbol Taldea &middot; Futbol Eskola 2026&ndash;2027
-  </footer>
-  <script defer="True" src="app.js">
-  </script>
- </body>
+  <footer>Mutriku Futbol Taldea · Futbol Eskola 2026–2027</footer>
+  <script defer src="app.js"></script>
+</body>
 </html>

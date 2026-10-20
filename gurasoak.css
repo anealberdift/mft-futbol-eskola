@@ -1,0 +1,9 @@
+/* Guraso arduradunen atalerako estilo osagarriak. */
+.parents-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 16px; align-items: start; margin-top: 16px; }
+.parent-card { margin: 0; min-width: 0; }
+.parent-names { margin: 14px 0 0; padding-left: 22px; line-height: 1.8; }
+.parent-names li { overflow-wrap: anywhere; }
+/* Jatorrizko estiloak osatuz, koloreak ziurtatu. */
+.parent-card.BEN1 { background: #fff0bd; color: #222; }
+.parent-card.BEN2 { background: #dceeff; color: #222; }
+.parent-card.ALE { background: #28216c; color: #fff; }

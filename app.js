@@ -32,8 +32,11 @@
       bar.append(b);
     }
     function teamOf(item){
-      const t=String(item.Taldea||'').trim().toUpperCase();
-      return categoryOf(item)==='BEN2'?'':t;
+      const raw = String(item.Taldea ?? item['Taldea '] ?? '').trim().toUpperCase();
+      if (categoryOf(item) === 'BEN2') return '';
+      const normalized = raw.normalize('NFKC').replace(/[ ​]/g, ' ').trim();
+      const found = normalized.match(/(?:^|\s)([ABC])(?:\s|$)/);
+      return found ? found[1] : normalized;
     }
     function titleOf(item){
       const c=categoryOf(item);
@@ -167,7 +170,15 @@
         row.append(node('th', round ? round + '. jard.' : 'Jard. zehazteke', 'calendar-round'));
         teams.forEach(t => {
           const td = node('td');
-          const games = relevant.filter(m => roundOf(m) === round && teamOf(m) === t);
+          const roundGames = relevant.filter(m => roundOf(m) === round);
+          let games = roundGames.filter(m => teamOf(m) === t);
+          // Taldea eremua APIan hutsik badator, dokumentuko
+          // A/B/C hurrenkera erabiltzen da soilik talde guztiak
+          // identifikatu gabe daudenean eta kopurua bat datorrenean.
+          const noTeamLabels = roundGames.every(m => !teamOf(m));
+          if (!games.length && noTeamLabels && roundGames.length === teams.length) {
+            games = [roundGames[teams.indexOf(t)]];
+          }
           if (!games.length) {
             td.append(calendarCell(null));
           } else {

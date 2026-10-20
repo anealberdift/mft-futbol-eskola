@@ -7,3 +7,11 @@
 .parent-card.BEN1 { background: #fff0bd; color: #222; }
 .parent-card.BEN2 { background: #dceeff; color: #222; }
 .parent-card.ALE { background: #28216c; color: #fff; }
+
+/* Jarrera protokoloa */
+.protocol-content { display: grid; gap: 12px; margin-top: 12px; }
+.protocol-step { border: 1px solid #dce2ef; border-left: 5px solid #28216c; border-radius: 12px; background: #fff; padding: 14px 17px; }
+.protocol-step h3 { margin: 0 0 7px; font-size: 1.04rem; color: #28216c; }
+.protocol-step p { margin: 0; line-height: 1.55; }
+.protocol-pdf-link { display: block; background: #28216c; color: #fff !important; text-decoration: none; border-radius: 12px; padding: 15px; font-weight: 700; text-align: center; }
+.protocol-pdf-link:hover, .protocol-pdf-link:focus-visible { background: #403794; }

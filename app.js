@@ -263,16 +263,52 @@
       return wrap;
     }
 
+    function protocolContent() {
+      const section = node('section', undefined, 'protocol-content');
+      section.append(node('p', 'Haur eta gazteen iruzkin oldarkorren aurrean, errespetuzko espazio seguruak sustatzeko protokoloa.', 'section-note'));
+      const steps = [
+        ['1. Erasoa identifikatzea', 'Egoera arretaz entzun eta jarrera homofoboak, arrazistak, matxistak edo bestelako errespetu faltak identifikatu.'],
+        ['2. Interbentzioa', 'Jarrera onartezina dela argi adierazi eta erasoa jasan duen pertsonari laguntza eskaini.'],
+        ['3. Gertaera dokumentatzea eta informatzea', 'Gertaeraren xehetasunak parte-orrian jaso eta familiari bidali.'],
+        ['4. Ondorioak', 'Bi parte: bi asteko kanporatzea. Hirugarren partea: hilabeteko kanporatzea. Laugarren partea: Eskola Kiroletik eta Kirol Eskoletatik kanporatzea.'],
+        ['5. Erreparazioa', 'Kasuaren arabera, eragindako kalte materialen erantzukizuna eta aitortza nahiz barkamen eskaera publikoa.'],
+        ['6. Jarraipena', 'Erasoa jasan duen pertsonaren egoeraren eta hartutako neurrien jarraipena egitea.'],
+        ['7. Berrazterketa', 'Protokoloa aldizka berrikusi eta eguneratzea.'],
+        ['8. Bide legala', 'Egoeraren arabera, kaltetuek bide legala erabiltzeko aukera dute.'],
+        ['9. Onarpena', 'Protokoloa 2024ko azaroaren 12an onartu zen Udaleko Kirol Batzordean eta Kirol Lan Mahaian.']
+      ];
+      steps.forEach(([heading, description]) => {
+        const card = node('article', undefined, 'protocol-step');
+        card.append(node('h3', heading));
+        card.append(node('p', description));
+        section.append(card);
+      });
+      const a = node('a', '📄 Jatorrizko protokolo osoa eta parte-orria ireki (PDF)', 'protocol-pdf-link');
+      a.href = 'jarrera-protokoloa.pdf';
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      section.append(a);
+      return section;
+    }
+
     function render() {
       const titles = {
         jardunaldiak: 'Jardunaldiak',
         entrenamenduak: 'Entrenamenduak',
         urteko: 'Urteko egutegia',
-        gurasoak: 'Guraso arduradunak'
+        gurasoak: 'Guraso arduradunak',
+        protokoloa: 'Jarrera protokoloa'
       };
       el('page-title').textContent = titles[page] || '';
       const bar = el('filter-bar');
       bar.replaceChildren();
+      el('refresh').hidden = page === 'protokoloa';
+      if (page === 'protokoloa') {
+        const out = el('results');
+        out.replaceChildren();
+        out.append(protocolContent());
+        return;
+      }
       filterButton(bar, 'Guztiak', category === 'guztiak', () => {
         category = 'guztiak';
         team = 'guztiak';

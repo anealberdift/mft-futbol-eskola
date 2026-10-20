@@ -194,6 +194,53 @@
       return section;
     }
 
+    // Jardunaldiak: kategoria bakoitzaren hurrengo jardunaldia soilik.
+    function matchDate(value) {
+      if (value === undefined || value === null || value === '') return null;
+      const s = String(value).trim();
+      let year, month, day;
+      let found = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+      if (found) {
+        [, year, month, day] = found.map(Number);
+      } else {
+        found = s.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})/);
+        if (!found) return null;
+        [, day, month, year] = found.map(Number);
+      }
+      const date = new Date(year, month - 1, day);
+      if (date.getFullYear() !== year ||
+          date.getMonth() !== month - 1 ||
+          date.getDate() !== day) return null;
+      return date;
+    }
+
+    function nextMatches() {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const selected = category === 'guztiak'
+        ? cats.map(([id]) => id)
+        : [category];
+      const result = [];
+
+      selected.forEach(cat => {
+        const upcoming = matches()
+          .filter(m => categoryOf(m) === cat)
+          .map(m => ({ match: m, date: matchDate(m.Data) }))
+          .filter(x => x.date && x.date >= today)
+          .sort((a, b) => a.date - b.date);
+        if (!upcoming.length) return;
+
+        // Jardunaldi bereko talde guztiak batera agertuko dira.
+        const first = upcoming[0];
+        const round = roundOf(first.match);
+        const sameRound = upcoming.filter(x => round
+          ? roundOf(x.match) === round
+          : x.date.getTime() === first.date.getTime());
+        sameRound.forEach(x => result.push(x.match));
+      });
+      return result;
+    }
+
     function render() {
       const titles = {
         jardunaldiak: 'Jardunaldiak',
@@ -229,9 +276,9 @@
       const list = page === 'entrenamenduak'
         ? (Array.isArray(dataset.entrenamenduak) ? dataset.entrenamenduak : [])
             .filter(x => category === 'guztiak' || categoryOf(x) === category)
-        : filteredMatches();
+        : nextMatches();
       if (!list.length) {
-        out.append(node('div', 'Ez dago daturik hautatutako aukerarako. Google Sheets-en fitxak eta ikusgarritasuna egiaztatu.', 'notice'));
+        out.append(node('div', page === 'jardunaldiak' ? 'Ez dago hurrengo jardunaldirik hautatutako kategorian.' : 'Ez dago daturik hautatutako aukerarako. Google Sheets-en fitxak eta ikusgarritasuna egiaztatu.', 'notice'));
         return;
       }
       list.forEach(item => out.append(page === 'entrenamenduak' ? trainingCard(item) : matchCard(item)));

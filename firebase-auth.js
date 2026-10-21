@@ -76,3 +76,33 @@ export async function saioaItxi() {
 export function saioaBehatu(callback) {
   return onAuthStateChanged(auth, callback);
 }
+
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const loginButton = document.getElementById('login-button');
+const loginStatus = document.getElementById('login-status');
+
+loginButton.addEventListener('click', async () => {
+  loginButton.disabled = true;
+  loginStatus.textContent = 'Saioa hasten…';
+
+  try {
+    const kategoria = await saioaHasi(
+      emailInput.value.trim(),
+      passwordInput.value
+    );
+
+    passwordInput.value = '';
+    loginStatus.textContent =
+      '✅ Saioa ondo hasi da. Zure sarbidea: ' + kategoria;
+
+  } catch (error) {
+    passwordInput.value = '';
+    loginStatus.textContent =
+      '❌ Ezin izan da saioa hasi. Egiaztatu datuak.';
+    console.error('Saioa hasteko errorea:', error.code || error.message);
+
+  } finally {
+    loginButton.disabled = false;
+  }
+});

@@ -364,7 +364,6 @@ if (page === 'urteko') {
     document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
     el('back').addEventListener('click',goHome);
     el('refresh').addEventListener('click',loadData);
-    el('login-button').addEventListener('click',()=>{el('login-status').textContent='Barne eremua oraindik ez dago aktibatuta.';});
     function loadData(){
       el('api-status').hidden=false;
       el('api-status').textContent='Google Sheets-eko datuak kargatzen…';

@@ -11,7 +11,7 @@ import { getFirestore } from
   'https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDdIYdhjZqM8mVtMBIIN11ARqeIio5vPVs",
+  apiKey: "AIzaSyDdlYdhjZqM8mVtMBIIN11ARqeIio5vPVs",
   authDomain: "mft-futbol-eskola.firebaseapp.com",
   projectId: "mft-futbol-eskola",
   storageBucket: "mft-futbol-eskola.firebasestorage.app",

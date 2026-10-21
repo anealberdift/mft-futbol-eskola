@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="eu">
 <head>
@@ -12,49 +13,128 @@
 <body>
   <header>
     <img alt="Mutriku Futbol Taldea logoa" src="logo.png">
-    <div><strong>MFT · FUTBOL ESKOLA</strong><small>2026–2027 · Mutriku</small></div>
-  </header>
-  <main class="wrap">
-    <div class="intro"><h1>Ongi etorri Futbol Eskolara!</h1><p>Denboraldiko informazio guztia leku berean.</p></div>
-    <div class="tabs">
-      <button aria-selected="true" class="active" data-tab="public" type="button">👨‍👩‍👧 Familiak</button>
-      <button aria-selected="false" data-tab="private" type="button">🔒 Barne eremua</button>
+    <div>
+      <strong>MFT · FUTBOL ESKOLA</strong>
+      <small>2026–2027 · Mutriku</small>
     </div>
+  </header>
+
+  <main class="wrap">
+    <div class="intro">
+      <h1>Ongi etorri Futbol Eskolara!</h1>
+      <p>Denboraldiko informazio guztia leku berean.</p>
+    </div>
+
+    <div class="tabs">
+      <button aria-selected="true" class="active"
+              data-tab="public" type="button">
+        👨‍👩‍👧 Familiak
+      </button>
+      <button aria-selected="false"
+              data-tab="private" type="button">
+        🔒 Barne eremua
+      </button>
+    </div>
+
+    <!-- FAMILIEN ATALA -->
     <section class="panel active" id="public">
       <div class="screen active" id="home">
-        <div class="notice" id="api-status" role="status">Datuak kargatzen…</div>
+        <div class="notice" id="api-status" role="status">
+          Datuak kargatzen…
+        </div>
+
         <div class="cards three">
-          <button class="card" data-page="jardunaldiak" type="button"><span class="symbol">📅</span><h3>Jardunaldiak</h3><p>Partidak, kokapenak eta autobusak</p></button>
-          <button class="card" data-page="entrenamenduak" type="button"><span class="symbol">🕒</span><h3>Entrenamenduak</h3><p>Ordutegiak eta aldagelak</p></button>
-          <button class="card" data-page="urteko" type="button"><span class="symbol">🗓️</span><h3>Urteko egutegia</h3><p>Talde bakoitzaren partida guztiak</p></button>
-          <button class="card" data-page="gurasoak" type="button"><span class="symbol">👥</span><h3>Guraso arduradunak</h3><p>Kategoria bakoitzeko arduradunak</p></button>
-          <button class="card" data-page="protokoloa" type="button"><span class="symbol">🛡️</span><h3>Jarrera protokoloa</h3><p>Errespetua, elkarbizitza eta jarduteko arauak</p></button>
+          <button class="card" data-page="jardunaldiak" type="button">
+            <span class="symbol">📅</span>
+            <h3>Jardunaldiak</h3>
+            <p>Partidak, kokapenak eta autobusak</p>
+          </button>
+
+          <button class="card" data-page="entrenamenduak" type="button">
+            <span class="symbol">🕒</span>
+            <h3>Entrenamenduak</h3>
+            <p>Ordutegiak eta aldagelak</p>
+          </button>
+
+          <button class="card" data-page="urteko" type="button">
+            <span class="symbol">🗓️</span>
+            <h3>Urteko egutegia</h3>
+            <p>Talde bakoitzaren partida guztiak</p>
+          </button>
+
+          <button class="card" data-page="gurasoak" type="button">
+            <span class="symbol">👥</span>
+            <h3>Guraso arduradunak</h3>
+            <p>Kategoria bakoitzeko arduradunak</p>
+          </button>
+
+          <button class="card" data-page="protokoloa" type="button">
+            <span class="symbol">🛡️</span>
+            <h3>Jarrera protokoloa</h3>
+            <p>Errespetua, elkarbizitza eta jarduteko arauak</p>
+          </button>
         </div>
       </div>
+
       <div class="screen" id="detail">
-        <button class="back" id="back" type="button">← Hasierara</button>
+        <button class="back" id="back" type="button">
+          ← Hasierara
+        </button>
         <h2 id="page-title"></h2>
         <div class="filters" id="filter-bar"></div>
-        <button class="refresh" id="refresh" type="button">↻ Eguneratu datuak</button>
+        <button class="refresh" id="refresh" type="button">
+          ↻ Eguneratu datuak
+        </button>
         <div aria-live="polite" id="results"></div>
       </div>
     </section>
+
+    <!-- BARNE EREMUA -->
     <section class="panel" id="private">
       <div class="login">
-        <h2>🔒 Saioa hasi</h2>
-        <div class="notice">Barne eremua oraindik ez dago aktibatuta. Ez sartu benetako pasahitzik.</div>
-        <label for="email">Helbide elektronikoa</label>
-        <input autocomplete="username" id="email" placeholder="Helbide elektronikoa" type="email">
-        <label for="password">Pasahitza</label>
-        <input autocomplete="current-password" id="password" placeholder="Pasahitza" type="password">
-        <button id="login-button" type="button">Saioa hasi</button>
-        <p id="login-status" role="status">Autentifikazio segurua hurrengo fasean ezarriko dugu.</p>
+        <h2>🔒 Barne Eremua</h2>
+
+        <p>
+          Mutriku Futbol Taldeko entrenatzaile eta
+          koordinatzaileentzako sarbidea.
+        </p>
+
+        <a
+          href="https://script.google.com/macros/s/AKfycbwLIyN8SpnM7UCiWeSPRpYLmCE8YRwTH1glGn2jasttXFAG4qn5Ikg9U6poQRr9JVgF/exec"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            display: block;
+            padding: 16px;
+            margin-top: 22px;
+            background: #28216c;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+          "
+        >
+          ⚽ Barne Eremura sartu
+        </a>
+
+        <p style="
+          margin-top: 18px;
+          text-align: center;
+          font-size: 13px;
+          color: #666;
+        ">
+          Sarbide baimendua duten erabiltzaileentzat soilik.
+        </p>
       </div>
     </section>
   </main>
-  <footer>Mutriku Futbol Taldea · Futbol Eskola 2026–2027</footer>
- 
+
+  <footer>
+    Mutriku Futbol Taldea · Futbol Eskola 2026–2027
+  </footer>
+
   <script defer src="app.js"></script>
 </body>
 </html>
-
